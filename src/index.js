@@ -1,0 +1,20 @@
+import './style.css';
+import { createNewFolder } from './domNewFolderFunction';
+import {
+  appendProjectNameToFolderList,
+  removeAllChildNodes,
+} from './domAppendProjectNameToFolderList';
+import { appendToTaskList } from './addTaskToDOMTaskList';
+
+// Take user input folder name
+document
+  .getElementById('newFolderForm')
+  .addEventListener('submit', createNewFolder);
+// Add folder name to list on screen
+document
+  .getElementById('newFolderForm')
+  .addEventListener('submit', appendProjectNameToFolderList);
+// Add Task
+document
+  .getElementById('newTaskForm')
+  .addEventListener('submit', appendToTaskList);
