@@ -1,15 +1,15 @@
 import './style.css';
-import { createNewFolder } from './domNewFolderFunction';
+import { createNewFolderObject } from './domNewFolderFunction';
 import {
   appendProjectNameToFolderList,
   removeAllChildNodes,
 } from './domAppendProjectNameToFolderList';
 import { appendToTaskList } from './addTaskToDOMTaskList';
 
-// Take user input folder name
+// Take user input folder name and create an object
 document
   .getElementById('newFolderForm')
-  .addEventListener('submit', createNewFolder);
+  .addEventListener('submit', createNewFolderObject);
 // Add folder name to list on screen
 document
   .getElementById('newFolderForm')

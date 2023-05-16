@@ -3,7 +3,7 @@ import {
   folderNameArray,
 } from './createNewProjectFolder';
 
-export function createNewFolder(event) {
+export function createNewFolderObject(event) {
   event.preventDefault();
 
   const folderName = document.getElementById('folderName').value;
