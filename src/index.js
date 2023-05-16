@@ -1,7 +1,7 @@
 import './style.css';
 import { createNewFolderObject } from './domNewFolderFunction';
 import {
-  appendProjectNameToFolderList,
+  appendToFolderList,
   removeAllChildNodes,
 } from './domAppendProjectNameToFolderList';
 import { appendToTaskList } from './addTaskToDOMTaskList';
@@ -13,7 +13,7 @@ document
 // Add folder name to list on screen
 document
   .getElementById('newFolderForm')
-  .addEventListener('submit', appendProjectNameToFolderList);
+  .addEventListener('submit', appendToFolderList);
 // Add Task
 document
   .getElementById('newTaskForm')

@@ -1,34 +1,23 @@
 import { folderNameArray } from './createNewProjectFolder';
 
-// Refresh List with New Project Name
-/* export function appendProjectNameToFolderList() {
-  let folderList = document.querySelector('.folderList');
-  let folderName = createNewTaskDiv();
-  removeAllChildNodes(folderList);
-  folderNameArray.forEach((element) => {
-    let folderDiv = document.createElement('div');
-    folderDiv.textContent = element;
-    folderName.appendChild(folderDiv);
-    let deleteButton = createDeleteButtonDiv();
-    addDeleteButtonEventListener(deleteButton);
-    folderName.appendChild(deleteButton);
-    folderList.appendChild(folderName);
-  });
-} */
-
-// Create Div with Task Description
-export function createTaskDescriptionDiv(taskobject) {
-  let task = document.createElement('div');
-  task.setAttribute('class', 'taskDescription');
-  task.textContent = taskobject.description;
-  return task;
+// Make Folder Row Div
+function createNewTaskDiv() {
+  let containerDiv = document.createElement('div');
+  containerDiv.setAttribute('class', 'folderName');
+  return containerDiv;
 }
-
-// Clear Folder names on website before re-adding all of them
-function removeAllChildNodes(parent) {
-  for (let i = parent.children.length - 1; i >= 0; i--) {
-    parent.removeChild(parent.children[i]);
-  }
+// Create Folder Container Div
+function createFolderContainerDiv() {
+  let containerDiv = document.createElement('div');
+  containerDiv.setAttribute('class', 'folderContainer');
+  return containerDiv;
+}
+// Create Div With Folder Name
+function createFolderNameDiv() {
+  let folder = document.createElement('div');
+  folder.setAttribute('class', 'folderName');
+  folder.textContent = document.getElementById('folderName').value;
+  return folder;
 }
 // Create Delete Button Div
 function createDeleteButtonDiv() {
@@ -40,14 +29,19 @@ function createDeleteButtonDiv() {
 // Add event listener to delete button
 function addDeleteButtonEventListener(button) {
   button.addEventListener('click', () => {
-    button.closest('.folderName').remove();
+    button.closest('.folderContainer').remove();
     // **BELOW SHOULD REMOVE OBJECT FROM INDEX TOO LATER
     /* delete myLibrary[index]; */
   });
 }
-// Make Folder Row Div
-function createNewTaskDiv() {
-  let containerDiv = document.createElement('div');
-  containerDiv.setAttribute('class', 'folderName');
-  return containerDiv;
+// Append Folder Name Div and Delete Button Div to folderList
+export function appendToFolderList() {
+  let folderList = document.getElementById('folderList');
+  let folderContainer = createFolderContainerDiv();
+  let folderNameDiv = createFolderNameDiv();
+  let deleteButton = createDeleteButtonDiv();
+  addDeleteButtonEventListener(deleteButton);
+  folderContainer.appendChild(folderNameDiv);
+  folderContainer.appendChild(deleteButton);
+  folderList.appendChild(folderContainer);
 }
