@@ -21,7 +21,13 @@
             <input type="submit" value="Create new">
         </form>   
     </div>
-    <div class="folderList"></div>
+    <div id="folderList">
+        <div class="folderContainer">
+            <div class="folderName">Test Folder</div>
+            <button><i id="deleteBtn" class="material-icons">delete</i>
+            </button>
+        </div>
+    </div>
     <form id="newTaskForm" action="">
         <input type="text" id="taskDescription" name="taskDescription" placeholder="Your task" required>
         <input type="date" id="dueDate" name="dueDate">
@@ -32,7 +38,5 @@
         <input type="submit" value="+">
     </form>
     <div id="taskList"></div>
-
-    
 </body>
 </html>

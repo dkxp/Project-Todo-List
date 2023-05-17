@@ -2,19 +2,22 @@ import './style.css';
 import { createNewFolderObject } from './domNewFolderFunction';
 import {
   appendToFolderList,
-  removeAllChildNodes,
+  addDeleteButtonEventListener,
 } from './domAppendProjectNameToFolderList';
 import { appendToTaskList } from './addTaskToDOMTaskList';
+import { addTaskToFolder } from './createNewProjectFolder';
 
-// Take user input folder name and create an object
-document
-  .getElementById('newFolderForm')
-  .addEventListener('submit', createNewFolderObject);
-// Add folder name to list on screen
+// Add event listener to delete button on test folder on page load
+addDeleteButtonEventListener(document.getElementById('deleteBtn'));
+// Add folder name to DOM
 document
   .getElementById('newFolderForm')
   .addEventListener('submit', appendToFolderList);
-// Add Task
+// Add task to DOM
 document
   .getElementById('newTaskForm')
   .addEventListener('submit', appendToTaskList);
+// Add task to folder
+document
+  .getElementById('newTaskForm')
+  .addEventListener('submit', addTaskToFolder);
