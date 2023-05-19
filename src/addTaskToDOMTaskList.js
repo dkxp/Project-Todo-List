@@ -76,7 +76,6 @@ function appendTaskPropertyDivsToContainer(taskObject) {
 }
 // Append Task Row Div to Task List Parent Div
 export function appendToTaskList(taskObject) {
-  event.preventDefault();
   let taskDiv = appendTaskPropertyDivsToContainer(taskObject);
   document.getElementById('taskList').appendChild(taskDiv);
 }
@@ -144,7 +143,6 @@ function removeAllChildNodes() {
     element.removeChild(element.firstChild);
   }
 }
-
 // Create div with checkbox
 function createCheckBoxDiv() {
   let checkBox = document.createElement('input');

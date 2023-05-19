@@ -26,9 +26,6 @@ export function findFolderIndex(folder) {
 
 // Push task object into folder
 export function addTaskToFolder(event) {
-  // This needs to be changed when switching folders
-  event.preventDefault();
-
   let folderName = 'Test Folder';
   let folderIndex = findFolderIndex(folderName);
   folderNameArray[folderIndex].push(createTaskObject());

@@ -30,7 +30,6 @@ export function addDeleteButtonEventListener(button) {
 }
 // Append Folder Name Div and Delete Button Div to folderList
 export function appendToFolderList(event) {
-  event.preventDefault();
   let folderList = document.getElementById('folderList');
   let folderContainer = createFolderContainerDiv();
   let folderNameDiv = createFolderNameDiv();

@@ -15,16 +15,18 @@ import { Task, createTaskObject } from './createTaskObject';
 // Add folder name to DOM
 document
   .getElementById('newFolderForm')
-  .addEventListener('submit', appendToFolderList);
+  .addEventListener('submit', function (event) {
+    event.preventDefault();
+    appendToFolderList();
+  });
 // Add task to folder array
 document
   .getElementById('newTaskForm')
-  .addEventListener('submit', addTaskToFolder);
-// Add task to DOM
-/* document
-  .getElementById('newTaskForm')
-  .addEventListener('submit', appendToTaskList);
- */
+  .addEventListener('submit', function (event) {
+    event.preventDefault();
+    addTaskToFolder();
+  });
+
 document
   .getElementById('newTaskForm')
   .addEventListener('submit', function (event) {
