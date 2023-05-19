@@ -66,6 +66,7 @@ function appendTaskPropertyDivsToContainer(taskObject) {
   containerDiv.appendChild(deleteButton);
   containerDiv.appendChild(editButton);
   deleteTaskFromArrayEventListener(deleteButton);
+  updateIndexEventListener(deleteButton);
   toggleTextStrikethrough(checkBox, taskDescription);
 
   // Current edit button shenanigans
@@ -85,6 +86,18 @@ function createDeleteButtonDiv() {
     '<i id="deleteBtn" class="material-icons">delete</i>';
   return deleteButton;
 }
+// Update index ID when a task is deleted
+function updateIndex() {
+  const taskNodes = document.getElementsByClassName('newTask');
+  for (let i = 0; i < taskNodes.length; i++) {
+    const taskNode = taskNodes[i];
+    taskNode.id = i + 1;
+  }
+}
+// Update index event listener
+function updateIndexEventListener(button) {
+  button.addEventListener('click', updateIndex);
+}
 // Get delete button parent div ID for task index
 function findTaskIndex(button) {
   let taskIndex = button.parentElement.id;
@@ -93,11 +106,24 @@ function findTaskIndex(button) {
   return taskIndex;
 }
 // Remove task from task array callback
-function deleteTaskFromArray(button) {
+function deleteTaskFromArray() {
   let folderIndex = findFolderIndex(currentFolderName);
   let taskIndex = findTaskIndex(button);
   folderNameArray[folderIndex].splice(taskIndex, 1);
 }
+/* function getChildIndex(element) {
+  const parentElement = document.getElementById('taskList');
+  const children = parentElement.children;
+  let index;
+
+  for (let i = 0; i < children.length; i++) {
+    if (children[i] === element) {
+      return i;
+    }
+  }
+
+  return; // Element not found
+} */
 // Remove task from array, event listner
 function deleteTaskFromArrayEventListener(button) {
   button.addEventListener('click', () => deleteTaskFromArray(button));
