@@ -1,4 +1,4 @@
-import { createTaskObject } from './addTaskToDOMTaskList';
+import { createTaskObject } from './createTaskObject';
 export const folderNameArray = [['Test Folder']];
 
 // Take user input folder name and create it as an array inside a folder array. This nested array will hold the task objects.
@@ -12,9 +12,9 @@ export function folderFactory(name) {
 window.folderNameArray = folderNameArray;
 
 // Find index of current folder
-function findFolderIndex(folder) {
+export function findFolderIndex(foldername) {
   for (let i = 0; i < folderNameArray.length; i++) {
-    if (folderNameArray[i][0] === folder) {
+    if (folderNameArray[i][0] === foldername) {
       console.log('foldernamearray', folderNameArray[i][0]);
       return i;
     }
