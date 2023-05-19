@@ -76,6 +76,7 @@ function appendTaskPropertyDivsToContainer(taskObject) {
 }
 // Append Task Row Div to Task List Parent Div
 export function appendToTaskList(taskObject) {
+  event.preventDefault();
   let taskDiv = appendTaskPropertyDivsToContainer(taskObject);
   document.getElementById('taskList').appendChild(taskDiv);
 }
@@ -106,7 +107,7 @@ function findTaskIndex(button) {
   return taskIndex;
 }
 // Remove task from task array callback
-function deleteTaskFromArray() {
+function deleteTaskFromArray(button) {
   let folderIndex = findFolderIndex(currentFolderName);
   let taskIndex = findTaskIndex(button);
   folderNameArray[folderIndex].splice(taskIndex, 1);
