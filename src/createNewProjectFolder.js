@@ -12,22 +12,28 @@ export function folderFactory(name) {
 window.folderNameArray = folderNameArray;
 
 // Find index of current folder
+// Issue with this...if duplicate folders with same name....How to fix?
 export function findFolderIndex(foldername) {
+  let folderIndex;
+  let noDuplicateFolderNames = true;
   for (let i = 0; i < folderNameArray.length; i++) {
     if (folderNameArray[i][0] === foldername) {
       console.log('foldernamearray', folderNameArray[i][0]);
-      return i;
+      folderIndex = i;
+
+      /* return i; */
     }
   }
 }
 
 // Push task object into folder
-export function addTaskToFolder() {
+export function addTaskToFolder(event) {
+  // This needs to be changed when switching folders
+  event.preventDefault();
+
   let folderName = 'Test Folder';
-  let folderIndex = findFolderIndex(folderName);
-  console.log(folderIndex);
-  folderNameArray[folderIndex].push(createTaskObject());
-  console.log(folderNameArray[folderIndex]);
+
+  folderNameArray[0].push(createTaskObject());
 }
 
 // Now we have an Array (folderNameArray) which holds another Array (individual folder) which holds

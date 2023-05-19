@@ -57,14 +57,19 @@ function appendTaskPropertyDivsToContainer(taskObject) {
   let containerDiv = createContainerDiv();
   let deleteButton = createDeleteButtonDiv();
   let checkBox = createCheckBoxDiv();
+  let editButton = createEditDiv();
   deleteTaskFromDOMEventListener(deleteButton);
   containerDiv.appendChild(checkBox);
   containerDiv.appendChild(taskDescription);
   containerDiv.appendChild(taskDueDate);
   containerDiv.appendChild(taskPriority);
   containerDiv.appendChild(deleteButton);
+  containerDiv.appendChild(editButton);
   deleteTaskFromArrayEventListener(deleteButton);
   toggleTextStrikethrough(checkBox, taskDescription);
+
+  // Current edit button shenanigans
+  editEventListener(editButton);
 
   return containerDiv;
 }
@@ -97,7 +102,6 @@ function deleteTaskFromArray(button) {
 function deleteTaskFromArrayEventListener(button) {
   button.addEventListener('click', () => deleteTaskFromArray(button));
 }
-
 // Add event listener to delete button to remove div from dom
 function deleteTaskFromDOMEventListener(button) {
   button.addEventListener('click', () => {
@@ -113,31 +117,14 @@ function removeAllChildNodes() {
     element.removeChild(element.firstChild);
   }
 }
-// Now, instead of adding just one task, we remove all tasks, and then read all the tasks in the array. How?
-// Variable to Keep track of current folder name
-export function appendTasksToDOM(event) {
-  // Prevent page refresh
-  event.preventDefault();
-  // Clear current list to add updated list with new task
-  removeAllChildNodes();
-  let folderIndex = findFolderIndex(currentFolderName);
-  // Check if task is in array
-  if (folderNameArray[folderIndex].length > 1) {
-    for (let i = 1; i < folderNameArray[folderIndex].length; i++) {
-      // Append task to DOM
-      const taskObject = folderNameArray[folderIndex][i];
-      appendToTaskList(taskObject);
-    }
-  }
-}
+
 // Create div with checkbox
 function createCheckBoxDiv() {
   let checkBox = document.createElement('input');
   checkBox.setAttribute('type', 'checkbox');
   return checkBox;
 }
-// Checkbox event listener function to cross out checkbox and task info
-
+// Checkbox eventlistener callback
 function toggleTextStrikethrough(checkBox, taskDescription) {
   checkBox.addEventListener('change', function () {
     // Check if the checkbox is checked
@@ -147,5 +134,22 @@ function toggleTextStrikethrough(checkBox, taskDescription) {
     } else {
       taskDescription.style.textDecoration = 'none';
     }
+  });
+}
+// Create edit div
+function createEditDiv() {
+  let editButton = document.createElement('button');
+  editButton.innerHTML =
+    '<i id="editBtn" class="material-icons">edit</i>';
+  return editButton;
+}
+// Edit eventlistener callback
+function editEventListener(editButton) {
+  editButton.addEventListener('click', function () {
+    const newWindow = window.open(
+      '',
+      '_blank',
+      'width=500,height=400'
+    );
   });
 }
