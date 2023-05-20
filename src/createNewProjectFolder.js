@@ -3,9 +3,13 @@ export const folderNameArray = [['Test Folder']];
 
 // Take user input folder name and create it as an array inside a folder array. This nested array will hold the task objects.
 export function folderFactory(name) {
+  // Create Nested Array
   let folderName = [];
+  // Add user input folder name as index 0 in nested array
   folderName.push(name);
+  // Add nested array into parent array
   folderNameArray.push(folderName);
+  return folderNameArray;
   console.log(folderNameArray);
 }
 

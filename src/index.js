@@ -8,6 +8,7 @@ import { appendToTaskList } from './addTaskToDOMTaskList';
 import {
   addTaskToFolder,
   folderNameArray,
+  folderFactory,
 } from './createNewProjectFolder';
 import { Task, createTaskObject } from './createTaskObject';
 

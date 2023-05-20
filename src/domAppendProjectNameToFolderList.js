@@ -20,16 +20,25 @@ export function createDeleteButtonDiv() {
     '<i id="deleteBtn" class="material-icons">delete</i>';
   return deleteButton;
 }
+// Update index ID when a task is deleted
+function updateIndex() {
+  const folderNodes =
+    document.getElementsByClassName('folderContainer');
+  for (let i = 0; i < folderNodes.length; i++) {
+    const folderNode = folderNodes[i];
+    // Add ID folder0, folder1, etc (have to differentiate from ID of tasks)
+    folderNode.id = `folder${i}`;
+  }
+}
 // Add event listener to delete button
 export function addDeleteButtonEventListener(button) {
   button.addEventListener('click', () => {
     button.closest('.folderContainer').remove();
-    // **BELOW SHOULD REMOVE OBJECT FROM INDEX TOO LATER
-    /* delete myLibrary[index]; */
+    updateIndex();
   });
 }
 // Append Folder Name Div and Delete Button Div to folderList
-export function appendToFolderList(event) {
+export function appendToFolderList() {
   let folderList = document.getElementById('folderList');
   let folderContainer = createFolderContainerDiv();
   let folderNameDiv = createFolderNameDiv();
@@ -38,4 +47,5 @@ export function appendToFolderList(event) {
   folderContainer.appendChild(folderNameDiv);
   folderContainer.appendChild(deleteButton);
   folderList.appendChild(folderContainer);
+  updateIndex();
 }
