@@ -1,8 +1,6 @@
 import { Task, createTaskObject } from './createTaskObject';
-import {
-  folderNameArray,
-  findFolderIndex,
-} from './createNewProjectFolder';
+import { folderNameArray } from './createNewProjectFolder';
+import { folderState } from './createNewProjectFolder';
 
 // Current Folder Name
 let currentFolderName = 'Test Folder';
@@ -49,7 +47,7 @@ function assignIndexToContainer(taskList) {
   taskCount += 1;
   return taskList.setAttribute('id', taskCount);
 }
-// Append task description, duedate, priority, delete button to Task Row Div
+// Append tasks to dom
 function appendTaskPropertyDivsToContainer(taskObject) {
   let taskDescription = createTaskDescriptionDiv(taskObject);
   let taskDueDate = createDueDateDiv(taskObject);
@@ -90,41 +88,23 @@ function createDeleteButtonDiv() {
 function updateIndex() {
   const taskNodes = document.getElementsByClassName('newTask');
   for (let i = 0; i < taskNodes.length; i++) {
-    const taskNode = taskNodes[i];
-    taskNode.id = i + 1;
+    const currentTask = taskNodes[i];
+    currentTask.id = i + 1;
   }
 }
 // Update index event listener
 function updateIndexEventListener(button) {
   button.addEventListener('click', updateIndex);
 }
-// Get delete button parent div ID for task index
-function findTaskIndex(button) {
-  let taskIndex = button.parentElement.id;
-  taskIndex = parseInt(taskIndex);
-  console.log('taskIndex', taskIndex);
-  return taskIndex;
-}
+
 // Remove task from task array callback
 function deleteTaskFromArray(button) {
-  let folderIndex = findFolderIndex(currentFolderName);
-  let taskIndex = findTaskIndex(button);
-  folderNameArray[folderIndex].splice(taskIndex, 1);
+  folderNameArray[folderState.currentFolderIndex].splice(
+    folderState.currentFolderIndex,
+    1
+  );
 }
-/* function getChildIndex(element) {
-  const parentElement = document.getElementById('taskList');
-  const children = parentElement.children;
-  let index;
 
-  for (let i = 0; i < children.length; i++) {
-    if (children[i] === element) {
-      return i;
-    }
-  }
-
-  return; // Element not found
-} */
-// Remove task from array, event listner
 function deleteTaskFromArrayEventListener(button) {
   button.addEventListener('click', () => deleteTaskFromArray(button));
 }
@@ -137,7 +117,7 @@ function deleteTaskFromDOMEventListener(button) {
   });
 }
 // Remove all child nodes
-function removeAllChildNodes() {
+export function removeAllTasks() {
   let element = document.getElementById('taskList');
   while (element.firstChild) {
     element.removeChild(element.firstChild);

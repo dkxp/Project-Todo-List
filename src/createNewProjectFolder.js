@@ -1,42 +1,27 @@
 import { createTaskObject } from './createTaskObject';
 export const folderNameArray = [['Test Folder']];
-
+export const folderState = {
+  currentFolderIndex: 0,
+};
 // Take user input folder name and create it as an array inside a folder array. This nested array will hold the task objects.
 export function folderFactory(name) {
   // Create Nested Array
-  let folderName = [];
-  // Add user input folder name as index 0 in nested array
-  folderName.push(name);
+  let folderName = [name];
   // Add nested array into parent array
   folderNameArray.push(folderName);
-  return folderNameArray;
   console.log(folderNameArray);
+  return folderNameArray;
 }
 
 window.folderNameArray = folderNameArray;
 
-// Find index of current folder
-export function findFolderIndex(folder) {
-  let folderIndex; // Declare the folderIndex variable
-  for (let i = 0; i < folderNameArray.length; i++) {
-    if (folderNameArray[i][0] === folder) {
-      console.log('foldernamearray', folderNameArray[i][0]);
-      folderIndex = i;
-      break; // Add a break statement to exit the loop once the folder is found
-    }
-  }
-  return folderIndex; // Return the folderIndex value
-}
-
 // Push task object into folder
-export function addTaskToFolder(event) {
-  let folderName = 'Test Folder';
-  let folderIndex = findFolderIndex(folderName);
-  folderNameArray[folderIndex].push(createTaskObject());
-  console.log(folderNameArray[folderIndex]);
+export function addTaskToFolder() {
+  folderNameArray[folderState.currentFolderIndex].push(
+    createTaskObject()
+  );
+  console.log(
+    'Contents of folder on new task click',
+    folderNameArray[folderState.currentFolderIndex]
+  );
 }
-
-// Now we have an Array (folderNameArray) which holds another Array (individual folder) which holds
-// the folder name as index[0]. The following indexes are the individual task objects
-// Now when we switch between folders, we can have a function that checks
-// if (folderNameArray[i][0] === 'document.textcontent.value') then, currentFolder = folderNameArray[i][0]!

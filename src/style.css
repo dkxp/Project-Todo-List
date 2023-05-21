@@ -19,3 +19,6 @@ header {
   display:flex;
   gap: 20px;
 }
+.folderContainer:hover {
+  outline: 2px solid blue;
+}
