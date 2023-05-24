@@ -1,6 +1,4 @@
-import { Task, createTaskObject } from './createTaskObject';
-import { folderNameArray } from './createNewProjectFolder';
-import { folderState } from './createNewProjectFolder';
+import { folderNameArray, folderState } from './folderFunctions';
 
 // Current Folder Name
 let currentFolderName = 'Test Folder';
@@ -99,6 +97,10 @@ function updateIndexEventListener(button) {
 
 // Remove task from task array callback
 function deleteTaskFromArray(button) {
+  // If no folder is selected
+  if (folderNameArray.length === 0) {
+    return;
+  }
   folderNameArray[folderState.currentFolderIndex].splice(
     folderState.currentFolderIndex,
     1

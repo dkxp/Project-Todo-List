@@ -1,60 +1,67 @@
-import { Task, createTaskObject } from './createTaskObject';
-import { folderNameArray } from '.createNewProjectFolder';
-
-// Create Task Row Functions
-export function createTaskCompleteInfoDiv() {
-  let container = document.createElement('div');
-  container.setAttribute('class', 'taskDescription');
-  return container;
+import { folderState, folderNameArray } from './folderFunctions';
+// Create DOM element for task property
+function createTaskDiv(divClass) {
+  let div = document.createElement('div');
+  div.setAttribute('class', `${divClass}`);
+  return div;
 }
-// Create Div with Task Description
+// Create Div with Task Description Text
 export function createTaskDescriptionDiv(taskobject) {
-  let task = document.createElement('div');
-  task.setAttribute('class', 'taskDescription');
-  task.textContent = taskobject.description;
-  return task;
+  let taskDescription = createTaskDiv('taskDescription');
+  taskDescription.textContent = taskobject.description;
+  return taskDescription;
 }
-// Create Div With Due Date
+// Create Div With Due Date Text
 export function createDueDateDiv(taskobject) {
-  let task = document.createElement('div');
-  task.setAttribute('class', 'taskDueDate');
-  task.textContent = taskobject.duedate;
-  return task;
+  let taskDueDate = createTaskDiv('taskDueDate');
+  taskDueDate.textContent = taskobject.duedate;
+  return taskDueDate;
 }
-// Create Div with Priority
+// Create Div with Priority Text
 export function createPriorityDiv(taskobject) {
-  let task = document.createElement('div');
-  task.setAttribute('class', 'taskPriority');
-  task.textContent = taskobject.priority;
-  return task;
+  let taskPriority = createTaskDiv('taskPriority');
+  taskPriority.textContent = taskobject.priority;
+  return taskPriority;
 }
-// Create Task Row Div
-function createNewTaskDiv() {
-  let containerDiv = document.createElement('div');
-  containerDiv.setAttribute('class', 'newTask');
-  return containerDiv;
+// Create Task Container Div
+function createTaskContainerDiv() {
+  let taskContainer = createTaskDiv('newTask');
+  return taskContainer;
 }
-// Append task description, duedate, priority, delete button to Task Row Div
-function appendTaskPropertyDivsToContainer() {
-  let taskObject = folderNameArray[0][1];
-  let taskDescription = createTaskDescriptionDiv(taskObject);
-  let taskDueDate = createDueDateDiv(taskObject);
-  let taskPriority = createPriorityDiv(taskObject);
-  let containerDiv = createNewTaskDiv();
-  let deleteButton = createDeleteButtonDiv();
-  addDeleteButtonEventListener(deleteButton);
-  containerDiv.appendChild(taskDescription);
-  containerDiv.appendChild(taskDueDate);
-  containerDiv.appendChild(taskPriority);
-  containerDiv.appendChild(deleteButton);
-  console.log(taskObject);
-  return containerDiv;
+// Create Checkbox Div
+function createCheckBoxDiv() {
+  let checkBox = document.createElement('input');
+  checkBox.setAttribute('type', 'checkbox');
+  return checkBox;
 }
-// Append Task Row Div to Task List Parent Div
-export function appendToTaskList(event) {
-  event.preventDefault();
-  let taskDiv = appendTaskPropertyDivsToContainer();
-  document.getElementById('taskList').appendChild(taskDiv);
+// Create edit div
+function createEditButton() {
+  let editButton = document.createElement('button');
+  editButton.innerHTML =
+    '<i id="editBtn" class="material-icons">edit</i>';
+  return editButton;
+}
+// Edit eventlistener callback
+function editEventListener(editButton) {
+  editButton.addEventListener('click', function () {
+    const newWindow = window.open(
+      '',
+      '_blank',
+      'width=500,height=400'
+    );
+  });
+}
+// Checkbox eventlistener callback
+function toggleTextStrikethrough(checkBox, taskDescription) {
+  checkBox.addEventListener('change', function () {
+    // Check if the checkbox is checked
+    if (checkBox.checked) {
+      // Apply strikethrough style to the text
+      taskDescription.style.textDecoration = 'line-through';
+    } else {
+      taskDescription.style.textDecoration = 'none';
+    }
+  });
 }
 // Create Delete Button Div
 function createDeleteButtonDiv() {
@@ -63,11 +70,104 @@ function createDeleteButtonDiv() {
     '<i id="deleteBtn" class="material-icons">delete</i>';
   return deleteButton;
 }
-// Add event listener to delete button
+// Add event listener to delete button to remove from dom and array
 function addDeleteButtonEventListener(button) {
-  button.addEventListener('click', () => {
+  button.addEventListener('click', (event) => {
+    // Index of task to be deleted
+    let index = clickedTaskIndex(event);
+
+    // Remove task from dom
     button.closest('.newTask').remove();
-    // **BELOW SHOULD REMOVE OBJECT FROM INDEX TOO LATER
-    /* delete myLibrary[index]; */
+    // Remove task from folder, unless no folder is selected
+    if (
+      folderNameArray[folderState.currentFolderIndex] !== undefined
+    ) {
+      folderNameArray[folderState.currentFolderIndex].splice(
+        index,
+        1
+      );
+    }
   });
+}
+// Get the dom element of the clicked task
+function getClickedTaskElement(event) {
+  return event.target.closest('.newTask');
+}
+// Get task nodelist
+function getTaskNodeList() {
+  return document.getElementsByClassName('NewTask');
+}
+// Get task index
+function getTaskIndex(nodeList, task) {
+  for (let i = 0; i < nodeList.length; i++) {
+    if (nodeList[i] === task) {
+      return i;
+    }
+  }
+}
+// Get index of clicked task
+function clickedTaskIndex(event) {
+  // Get clicked task element
+  const clickedTask = getClickedTaskElement(event);
+  console.log('clickedTask', clickedTask);
+  // Get task nodelist
+  const nodeList = getTaskNodeList();
+  console.log('nodeList', nodeList);
+  // Interate over nodelist to find task index
+  return getTaskIndex(nodeList, clickedTask);
+}
+// Callback function to append divs to container
+function appendDivsToContainer(
+  checkBox,
+  containerDiv,
+  taskDescription,
+  taskDueDate,
+  taskPriority,
+  deleteButton,
+  editButton,
+  taskList
+) {
+  containerDiv.appendChild(checkBox);
+  containerDiv.appendChild(taskDescription);
+  containerDiv.appendChild(taskDueDate);
+  containerDiv.appendChild(taskPriority);
+  containerDiv.appendChild(deleteButton);
+  containerDiv.appendChild(editButton);
+  taskList.appendChild(containerDiv);
+}
+// Remove all child nodes
+export function removeAllTasks() {
+  let element = document.getElementById('taskList');
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+}
+// Append task to DOM
+export function appendTaskPropertyDivsToContainer(taskObject) {
+  // Create divs
+  let checkBox = createCheckBoxDiv();
+  let taskDescription = createTaskDescriptionDiv(taskObject);
+  let taskDueDate = createDueDateDiv(taskObject);
+  let taskPriority = createPriorityDiv(taskObject);
+  let containerDiv = createTaskContainerDiv();
+  let editButton = createEditButton();
+  let deleteButton = createDeleteButtonDiv();
+  let taskList = document.getElementById('taskList');
+  // Add checkbox event listener
+  toggleTextStrikethrough(checkBox, taskDescription);
+  // Add delete button event listener
+  addDeleteButtonEventListener(deleteButton);
+  // Add edit button event listener
+  editEventListener(editButton);
+  // Append task to list
+  containerDiv = appendDivsToContainer(
+    checkBox,
+    containerDiv,
+    taskDescription,
+    taskDueDate,
+    taskPriority,
+    deleteButton,
+    editButton,
+    taskList
+  );
 }
